@@ -9,9 +9,10 @@ end, 'fade', 1.5, { _Mask = 'Masks/fade_up' })
 set_box()
 box_alignment('center')
 |>
-深夜十一点，迎宾大厦的灯还亮着。
+深夜十一点，这里的灯还亮着。
 
-据说三年前，有一批访客在这里失踪了，连警察都没有立案。
+据说三年前，有一批访客在<color=#E5C36E>迎宾大厦</color>失踪了，连警察都没有立案。
+<| gallery_unlock('yingbinmansion') |>
 
 <|
 stop_auto_ff()

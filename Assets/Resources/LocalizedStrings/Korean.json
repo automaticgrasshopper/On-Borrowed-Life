@@ -145,5 +145,10 @@
   "ui.title.start.new": "게임 시작",
   "ui.title.start.continue": "게임 계속",
   "flowchart.moveback.confirm": "이 노드에서 계속하시겠습니까?",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "인물",
+  "ui.title.StoryNews": "기담",
+  "ui.title.StoryMessage": "정보",
+  "ui.title.StoryItem": "도구",
+  "gallery.notification.added": "{0}이(가) 견문에 추가되었습니다"
 }

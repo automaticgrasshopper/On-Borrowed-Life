@@ -145,5 +145,10 @@
   "ui.title.start.continue": "繼續遊戲",
   "config.item.buttonringshow": "環形菜單",
   "flowchart.moveback.confirm": "從這個節點繼續故事？",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "人物",
+  "ui.title.StoryNews": "奇聞",
+  "ui.title.StoryMessage": "情報",
+  "ui.title.StoryItem": "道具",
+  "gallery.notification.added": "{0}已加入見聞"
 }

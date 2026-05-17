@@ -14,5 +14,9 @@
   "flowchart.slot.1_5_B": "货梯探险",
   "flowchart.slot.1_6_A": "短暂安全",
   "flowchart.slot.1_6_B": "意外之死",
-  "flowchart.slot.1_6_C": "无为之安"
+  "flowchart.slot.1_6_C": "无为之安",
+  "gallery.message.yingbinmansion.title": "迎宾大厦",
+  "gallery.message.yingbinmansion.desc": "迎宾大厦，完工于1998年的商住两用楼。",
+  "gallery.message.camera.title": "无人摄像头",
+  "gallery.message.camera.desc": "迎宾大厦的监控摄像头，即使没有保安，还在自主转动。"
 }

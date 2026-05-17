@@ -145,5 +145,10 @@
   "ui.title.start.new": "Commencer",
   "ui.title.start.continue": "Continuer",
   "flowchart.moveback.confirm": "Continuer depuis ce nœud ?",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "Personnages",
+  "ui.title.StoryNews": "Mystères",
+  "ui.title.StoryMessage": "Renseignements",
+  "ui.title.StoryItem": "Objets",
+  "gallery.notification.added": "{0} ajouté à la galerie"
 }

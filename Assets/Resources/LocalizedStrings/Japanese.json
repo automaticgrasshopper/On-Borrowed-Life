@@ -145,5 +145,10 @@
   "ui.title.start.continue": "ゲームを続ける",
   "config.item.buttonringshow": "リングメニュ",
   "flowchart.moveback.confirm": "このノードから続けますか？",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "キャラクター",
+  "ui.title.StoryNews": "怪奇",
+  "ui.title.StoryMessage": "情報",
+  "ui.title.StoryItem": "アイテム",
+  "gallery.notification.added": "「{0}」を見聞に追加しました"
 }

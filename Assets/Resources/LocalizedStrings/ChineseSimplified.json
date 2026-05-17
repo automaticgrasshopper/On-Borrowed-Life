@@ -145,5 +145,10 @@
   "ui.title.start.new": "开始游戏",
   "ui.title.start.continue": "继续游戏",
   "flowchart.moveback.confirm": "从这个节点继续故事？",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "人物",
+  "ui.title.StoryNews": "奇闻",
+  "ui.title.StoryMessage": "情报",
+  "ui.title.StoryItem": "道具",
+  "gallery.notification.added": "{0}已加入见闻"
 }

@@ -8,9 +8,11 @@ public class Nova_I18nWrap
 	{
 		L.BeginStaticLibs("I18n");
 		L.RegFunction("__", __);
+		L.RegFunction("C", C);
 		L.RegFunction("GetLocalizedStrings", GetLocalizedStrings);
 		L.RegVar("LocalizedResourcesPath", get_LocalizedResourcesPath, null);
 		L.RegVar("LocalizedStringsPath", get_LocalizedStringsPath, null);
+		L.RegVar("LocalizedContentPath", get_LocalizedContentPath, null);
 		L.RegVar("SupportedLocales", get_SupportedLocales, null);
 		L.RegVar("LocaleChanged", get_LocaleChanged, null);
 		L.RegVar("DefaultLocale", get_DefaultLocale, null);
@@ -44,6 +46,24 @@ public class Nova_I18nWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: Nova.I18n.__");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int C(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			string arg0 = ToLua.CheckString(L, 1);
+			object[] arg1 = ToLua.ToParamsObject(L, 2, count - 1);
+			string o = Nova.I18n.C(arg0, arg1);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -89,6 +109,20 @@ public class Nova_I18nWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, Nova.I18n.LocalizedStringsPath);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LocalizedContentPath(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, Nova.I18n.LocalizedContentPath);
 			return 1;
 		}
 		catch (Exception e)

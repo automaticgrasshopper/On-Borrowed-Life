@@ -33,6 +33,12 @@ namespace Nova
         [SerializeField] private Button btnGallery;
         [SerializeField] private Button btnConfig;
 
+        [Header("Gallery NEW badge")]
+        [Tooltip("挂载 NewShowTitle.prefab 的子节点（btnGallery 下随意空 RectTransform，运行时 Instantiate badge 进去）。位置 52, 45.2 在该节点本地坐标。")]
+        [SerializeField] private RectTransform galleryBadgeAnchor;
+        [SerializeField] private NewBadge newBadgePrefab;
+        [SerializeField] private Vector2 badgeAnchoredPosition = new Vector2(52f, 45.2f);
+
         [Header("Audio (uses Nova UISound volume)")]
         [SerializeField] private AudioClip slideOpenSound;
         [SerializeField] private AudioClip slideCloseSound;
@@ -50,6 +56,7 @@ namespace Nova
         // 视频播放 / 小游戏期间禁用侧边菜单（不弹出、按钮不响应），避免玩家在中断流程中切走视图
         private VideoController videoController;
         private PrefabLoader prefabLoader;
+        private NewBadge galleryBadgeInstance;
 
         /// <summary>
         /// 是否处于阻塞态：视频在播 或 prefabLoader 上挂着小游戏 prefab。
@@ -83,6 +90,32 @@ namespace Nova
             if (btnLog != null)       btnLog.onClick.AddListener(OnLogClick);
             if (btnGallery != null)   btnGallery.onClick.AddListener(OnGalleryClick);
             if (btnConfig != null)    btnConfig.onClick.AddListener(OnConfigClick);
+
+            // 见闻按钮的 NEW 红点
+            if (galleryBadgeAnchor != null && newBadgePrefab != null && galleryBadgeInstance == null)
+            {
+                galleryBadgeInstance = Instantiate(newBadgePrefab, galleryBadgeAnchor, false);
+                var rt = galleryBadgeInstance.GetComponent<RectTransform>();
+                if (rt != null) rt.anchoredPosition = badgeAnchoredPosition;
+                galleryBadgeInstance.SetVisible(false);
+            }
+        }
+
+        private void OnEnable()
+        {
+            var svc = GalleryService.Instance;
+            if (svc != null)
+            {
+                svc.onDataChanged += RefreshGalleryBadge;
+                RefreshGalleryBadge();
+            }
+        }
+
+        private void RefreshGalleryBadge()
+        {
+            if (galleryBadgeInstance == null) return;
+            var svc = GalleryService.Instance;
+            galleryBadgeInstance.SetVisible(svc != null && svc.HasAnyUnread());
         }
 
         private void OnDisable()
@@ -92,6 +125,9 @@ namespace Nova
             isOpen = false;
             wasHover = false;
             clickCooldown = 0f;
+
+            var svc = GalleryService.Instance;
+            if (svc != null) svc.onDataChanged -= RefreshGalleryBadge;
         }
 
         private void Update()
@@ -195,8 +231,9 @@ namespace Nova
         private void OnGalleryClick()
         {
             if (IsBlocked()) return;
-            // Placeholder — see-and-hear gallery (见闻) not yet implemented.
             PlaySound(buttonClickSound);
+            var ctrl = viewManager != null ? viewManager.GetController<StoryGalleryViewController>() : null;
+            if (ctrl != null) ctrl.Show();
             BeginCloseAfterAction();
         }
 

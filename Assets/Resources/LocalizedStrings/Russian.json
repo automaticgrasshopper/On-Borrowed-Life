@@ -145,5 +145,10 @@
   "ui.title.start.new": "Начать игру",
   "ui.title.start.continue": "Продолжить игру",
   "flowchart.moveback.confirm": "Продолжить с этого узла?",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "Персонажи",
+  "ui.title.StoryNews": "Загадки",
+  "ui.title.StoryMessage": "Сведения",
+  "ui.title.StoryItem": "Предметы",
+  "gallery.notification.added": "{0} добавлено в галерею"
 }

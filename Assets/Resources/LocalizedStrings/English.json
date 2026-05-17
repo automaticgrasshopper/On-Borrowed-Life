@@ -145,5 +145,10 @@
   "ui.title.start.new": "Start",
   "ui.title.start.continue": "Continue",
   "flowchart.moveback.confirm": "Continue from here?",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "Characters",
+  "ui.title.StoryNews": "Mysteries",
+  "ui.title.StoryMessage": "Intel",
+  "ui.title.StoryItem": "Items",
+  "gallery.notification.added": "{0} added to the Gallery"
 }

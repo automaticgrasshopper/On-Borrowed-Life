@@ -145,5 +145,10 @@
   "ui.title.start.new": "Starten",
   "ui.title.start.continue": "Fortsetzen",
   "flowchart.moveback.confirm": "Von diesem Knoten fortfahren?",
-  "flowchart.percent.format": "{0}%"
+  "flowchart.percent.format": "{0}%",
+  "ui.title.StoryHero": "Charaktere",
+  "ui.title.StoryNews": "Mysterien",
+  "ui.title.StoryMessage": "Informationen",
+  "ui.title.StoryItem": "Gegenstände",
+  "gallery.notification.added": "{0} zur Galerie hinzugefügt"
 }

@@ -60,6 +60,7 @@ public static partial class LuaBinder
 		TMPro_TextAlignmentOptionsWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("Nova");
+		Nova_GalleryServiceWrap.Register(L);
 		Nova_AlertWrap.Register(L);
 		Nova_ActionAnimationPropertyWrap.Register(L);
 		Nova_AnchorAnimationPropertyWrap.Register(L);
