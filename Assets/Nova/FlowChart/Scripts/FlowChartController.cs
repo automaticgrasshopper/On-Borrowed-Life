@@ -648,6 +648,23 @@ namespace Nova
             }
         }
 
+        /// <summary>
+        /// 该 slot 是否应显示「本章完」。
+        /// 条件：① slot.isChapterEnd 勾选；② 玩家已读过 slot.nodeNames 末尾节点的最后一句对话。
+        /// 仅勾标记但未读完最后一句 → 不显示（避免章节中途亮"完"）。
+        /// </summary>
+        public bool IsEndSlot(FlowChartSlot slot)
+        {
+            if (slot == null || !slot.isChapterEnd) return false;
+            if (slot.nodeNames == null || slot.nodeNames.Count == 0) return false;
+            var lastNodeName = slot.nodeNames[slot.nodeNames.Count - 1];
+            var node = gameState != null ? gameState.GetNode(lastNodeName, false) : null;
+            if (node == null) return false;
+            int lastIndex = node.dialogueEntryCount - 1;
+            if (lastIndex < 0) return false;
+            return checkpointManager.IsReachedAnyHistory(lastNodeName, lastIndex);
+        }
+
         // ── Slot 音效（由 SlotView 调用） ─────────────────────────────────
         public void PlaySlotHoverSound()
         {

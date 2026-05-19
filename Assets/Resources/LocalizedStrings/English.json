@@ -135,7 +135,7 @@
   "title.chaptersubtitle.chapter4": "Chapter 4",
   "title.chaptersubtitle.chapter5": "Chapter 5",
   "title.chaptersubtitle.chapter6": "Chapter 6",
-  "title.subtitle": "Mansion of Talismans and Hexes",
+  "title.subtitle": "Talismans of Hexes",
   "title.skip.animi": "Skip",
   "title.unlock.achieve": "Achievement Unlocked",
   "ui.button.flowchart": "Flowchart",
@@ -150,5 +150,6 @@
   "ui.title.StoryNews": "Mysteries",
   "ui.title.StoryMessage": "Intel",
   "ui.title.StoryItem": "Items",
+  "ui.title.endchapter": "End of Chapter",
   "gallery.notification.added": "{0} added to the Gallery"
 }

@@ -135,7 +135,7 @@
   "title.chaptersubtitle.chapter4": "第四章",
   "title.chaptersubtitle.chapter5": "第五章",
   "title.chaptersubtitle.chapter6": "第六章",
-  "title.subtitle": "命符咒禁大厦",
+  "title.subtitle": "Talismans of Hexes",
   "title.skip.animi": "跳过",
   "title.unlock.achieve": "成就解锁",
   "ui.button.flowchart": "流程图",
@@ -150,5 +150,6 @@
   "ui.title.StoryNews": "奇闻",
   "ui.title.StoryMessage": "情报",
   "ui.title.StoryItem": "道具",
+  "ui.title.endchapter": "本章完",
   "gallery.notification.added": "{0}已加入见闻"
 }

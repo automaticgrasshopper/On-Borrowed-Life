@@ -3834,7 +3834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 497ca201f0ec75b419583dbbb79a1912, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -10741,7 +10741,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 命符咒禁大厦
+  m_Text: Talisman of Hexes
 --- !u!222 &1406130092
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11506,7 +11506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -794, y: -398}
+  m_AnchoredPosition: {x: -794, y: -328}
   m_SizeDelta: {x: 136, y: 89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515607015
@@ -13729,7 +13729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3d12b3c2823014847a0019072e28c4d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aed00e6903c817c40ba919bf02217792, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15567,7 +15567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 10b091f21c2704d438b7beff36b6150b, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -28494,6 +28494,10 @@ PrefabInstance:
     - target: {fileID: 8916837232526780201, guid: 3c27b5526c09db84e89cdd483dd6af66, type: 3}
       propertyPath: m_ChildAlignment
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8916837232526780201, guid: 3c27b5526c09db84e89cdd483dd6af66, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8916837232526780201, guid: 3c27b5526c09db84e89cdd483dd6af66, type: 3}
       propertyPath: m_ChildControlWidth

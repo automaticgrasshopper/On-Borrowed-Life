@@ -30,5 +30,8 @@ namespace Nova
 
         [Tooltip("是否为死亡结局 slot。\n- 视觉：显示 prefab 上的 SlotDeath 特殊图，SlotChoicen / SlotOutside 都不显示\n- 行为：节点 is_end / is_dead 触发后，玩家被送回流程图（停在此 slot）而非主界面\n- 脚本端约定：死亡结局节点写 is_dead() 替代 is_end()（功能完全等同 is_end，只是语义化标注）")]
         public bool isDeath;
+
+        [Tooltip("是否为本章「真结局」端点。\n- 视觉：在该 slot 上显示 IsendText（i18n: ui.title.endchapter，配合 prefab 的投影效果）\n- 一章可有多个（多结局分支各自标记）\n- 与玩家进度无关，玩家走到该 slot 才会渲染并显示")]
+        public bool isChapterEnd;
     }
 }

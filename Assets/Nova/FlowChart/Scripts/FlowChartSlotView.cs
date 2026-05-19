@@ -24,6 +24,7 @@ namespace Nova
         [SerializeField] private GameObject slotDeath;        // 死亡结局装饰图（isDeath=true 且非 Current 时显示）
         [SerializeField] private GameObject slotDeathChoicen; // 死亡结局且 Current 时显示（玩家死亡回流程图时停在此节点）
         [SerializeField] private GameObject nodeText;     // hover 时显示的节点名，默认隐藏
+        [SerializeField] private GameObject isEndText;    // 本章节最后一个非死亡 slot 显示「本章完」（含投影），默认隐藏
         private TMP_Text nodeTextLabel;
 
         // 运行时填入
@@ -60,6 +61,20 @@ namespace Nova
                 if (nodeTextLabel != null)
                     nodeTextLabel.text = I18n.C(slotData.slotNameKey);
                 nodeText.SetActive(false);
+            }
+
+            // IsendText：仅在本章节最后一个非死亡 slot 上显示
+            // 投影通过 prefab 配置（主层 + 偏移阴影层 / TMP underlay 材质），代码只负责文字与激活
+            if (isEndText != null)
+            {
+                bool isEnd = controller != null && controller.IsEndSlot(slotData);
+                if (isEnd)
+                {
+                    var label = I18n.C("ui.title.endchapter");
+                    foreach (var t in isEndText.GetComponentsInChildren<TMP_Text>(true))
+                        t.text = label;
+                }
+                isEndText.SetActive(isEnd);
             }
 
             // 把所有子 Button 的点击都转发到 OnSlotClicked（解决子 Button 拦截事件问题）
