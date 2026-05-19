@@ -50,17 +50,19 @@ namespace Nova
             public readonly Dictionary<SystemLanguage, string> texts;
             public readonly ChoiceImageInformation imageInfo;
             public readonly bool interactable;
+            public readonly bool wasChosen;
 
             public Choice(Dictionary<SystemLanguage, string> texts, ChoiceImageInformation imageInfo,
-                bool interactable)
+                bool interactable, bool wasChosen = false)
             {
                 this.texts = texts;
                 this.imageInfo = imageInfo;
                 this.interactable = interactable;
+                this.wasChosen = wasChosen;
             }
 
-            public Choice(string text, ChoiceImageInformation imageInfo, bool interactable) : this(
-                new Dictionary<SystemLanguage, string> { [I18n.DefaultLocale] = text }, imageInfo, interactable)
+            public Choice(string text, ChoiceImageInformation imageInfo, bool interactable, bool wasChosen = false) : this(
+                new Dictionary<SystemLanguage, string> { [I18n.DefaultLocale] = text }, imageInfo, interactable, wasChosen)
             { }
         }
 

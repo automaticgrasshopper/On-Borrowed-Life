@@ -555,8 +555,17 @@ namespace Nova
                     continue;
                 }
 
+                // 查"是否已选过"：branch 通向的目标节点之前进过没
+                var wasChosen = false;
+                var nextNode = node.GetNext(branchInfo.name);
+                if (nextNode != null)
+                {
+                    wasChosen = checkpointManager.IsReachedAnyHistory(nextNode.name, 0);
+                }
+
                 var choice = new ChoiceOccursData.Choice(branchInfo.texts, branchInfo.imageInfo,
-                    interactable: branchInfo.mode != BranchMode.Enable || branchInfo.condition.Invoke<bool>());
+                    interactable: branchInfo.mode != BranchMode.Enable || branchInfo.condition.Invoke<bool>(),
+                    wasChosen: wasChosen);
                 choices.Add(choice);
                 choiceNames.Add(branchInfo.name);
             }

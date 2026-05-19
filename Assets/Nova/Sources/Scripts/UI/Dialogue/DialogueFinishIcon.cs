@@ -1,49 +1,101 @@
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Nova
 {
-    [RequireComponent(typeof(RawImage))]
+    /// <summary>
+    /// 对话框"等待点击"提示图标：
+    /// - 用 DOTween 在世界 Y 上做 jump 动画（参数语义对齐 Assets/Resources/CScripts/DiaCursorTik.cs）
+    /// - 可被 DialogueBoxController 重新 parent + 重定位到最新对话条尾
+    /// </summary>
     public class DialogueFinishIcon : MonoBehaviour
     {
-        public Camera cubeCamera;
-        public GameObject cube;
-        public float precessionSpeed = 10.0f;
-        public float rotationSpeed = 20.0f;
-        public float yAmp = 0.5f;
-        public float yFreq = 3.0f;
+        [Tooltip("跳跃高度（世界单位，同 DiaCursorTik）")]
+        public float jumpHeight = 0.1f;
+
+        [Tooltip("单程时长（秒）。完整起落周期 = 2 × jumpDuration")]
+        public float jumpDuration = 1f;
+
+        [Tooltip("循环次数，-1 = 无限")]
+        public int jumpCount = -1;
+
+        [Tooltip("Append 模式下，相对末字右下角的额外偏移（x = 离末字右边距离，y = 垂直微调）")]
+        public Vector2 tailOffset = new Vector2(8f, 0f);
 
         private RectTransform rt;
-        private RawImage img;
-        private RenderTexture renderTexture;
-        private Vector3 rotateAxis = Vector3.one;
+        private Transform originalParent;
+        private Vector3 originalLocalPos;
+        private Tween upTween;
+        private Tween loopTween;
+        private bool inited;
 
         private void Awake()
         {
-            this.RuntimeAssert(cubeCamera != null, "Missing cubeCamera.");
-            this.RuntimeAssert(cube != null, "Missing cube.");
             rt = GetComponent<RectTransform>();
-            img = GetComponent<RawImage>();
-            var rect = rt.rect;
-            // Don't do MSAA here. It's hard to check whether the driver supports it.
-            cubeCamera.targetTexture = renderTexture = new RenderTexture((int)rect.height, (int)rect.height, 0)
+            originalParent = rt.parent;
+            originalLocalPos = rt.localPosition;
+            inited = true;
+        }
+
+        /// <summary>把图标 reparent 到指定 transform 下，并以 parent 的 local 坐标定位。</summary>
+        public void SetParentAndLocalPosition(Transform parent, Vector3 localPos)
+        {
+            if (!inited) return;
+            if (rt.parent != parent)
             {
-                name = "DialogueFinishIconRenderTexture"
-            };
-            img.texture = renderTexture;
+                rt.SetParent(parent, false);
+            }
+            rt.localPosition = localPos;
+            RestartJump();
+        }
+
+        /// <summary>回到 Awake 时缓存的原始 parent 与 localPosition。</summary>
+        public void RestoreToOriginal()
+        {
+            if (!inited) return;
+            if (rt.parent != originalParent)
+            {
+                rt.SetParent(originalParent, false);
+            }
+            rt.localPosition = originalLocalPos;
+            RestartJump();
+        }
+
+        private void OnEnable()
+        {
+            if (inited) RestartJump();
+        }
+
+        private void OnDisable()
+        {
+            KillTweens();
         }
 
         private void OnDestroy()
         {
-            Destroy(renderTexture);
+            KillTweens();
         }
 
-        private void Update()
+        private void KillTweens()
         {
-            rotateAxis += Random.insideUnitSphere * (precessionSpeed * Time.deltaTime);
-            rotateAxis.Normalize();
-            cube.transform.Rotate(rotateAxis, rotationSpeed * Time.deltaTime);
-            cube.transform.localPosition = Vector3.up * (yAmp * Mathf.Abs(Mathf.Sin(yFreq * Time.time)));
+            upTween?.Kill();
+            loopTween?.Kill();
+            upTween = null;
+            loopTween = null;
+        }
+
+        private void RestartJump()
+        {
+            KillTweens();
+            // 第一段：从当前位置上跳一次到峰值
+            float baseY = transform.position.y;
+            upTween = transform.DOMoveY(baseY + jumpHeight, jumpDuration)
+                .OnComplete(() =>
+                {
+                    // 第二段：在 [baseY, baseY+jumpHeight] 之间 Yoyo 循环
+                    loopTween = transform.DOMoveY(baseY, jumpDuration)
+                        .SetLoops(jumpCount, LoopType.Yoyo);
+                });
         }
     }
 }

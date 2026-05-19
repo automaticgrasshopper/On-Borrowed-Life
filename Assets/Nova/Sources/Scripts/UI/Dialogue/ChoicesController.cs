@@ -77,8 +77,12 @@ namespace Nova
                 // Prevent showing the button before init
                 button.gameObject.SetActive(false);
                 button.Init(choice.texts, choice.imageInfo, imageFolder, () => Select(index),
-                    choice.interactable);
+                    choice.interactable, choice.wasChosen);
                 button.gameObject.SetActive(true);
+
+                // 入场扫描特效（错峰 0.04s/按钮）
+                var fx = button.GetComponent<ChoiceButtonFX>();
+                if (fx != null) fx.PlayReveal(i * 0.04f);
             }
 
             buttons = GetComponentsInChildren<Button>();

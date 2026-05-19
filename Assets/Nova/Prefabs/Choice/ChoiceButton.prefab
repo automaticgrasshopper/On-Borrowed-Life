@@ -92,6 +92,8 @@ GameObject:
   - component: {fileID: 114881617801617298}
   - component: {fileID: 114312941846281828}
   - component: {fileID: 8702215254368758180}
+  - component: {fileID: 8702215254368758181}
+  - component: {fileID: -3207871423193310933}
   m_Layer: 5
   m_Name: ChoiceButton
   m_TagString: Untagged
@@ -139,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b2d5f6e3a4c758f9ab1d2e3f45670102, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -188,7 +190,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 55ccf359dd153ea46a7409cd314128a4, type: 3}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: 3c4a9a50e0d3c814684e6720a0dddf09, type: 3}
     m_DisabledSprite: {fileID: 21300000, guid: 138d212bcc800d94a82650a89321e9c0, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -216,3 +218,36 @@ MonoBehaviour:
   text: {fileID: 114410797073233340}
   image: {fileID: 114881617801617298}
   button: {fileID: 114312941846281828}
+--- !u!114 &8702215254368758181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283954230108114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e6f7a5b6d869fabc2d3e4f56781203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  revealDuration: 0.3
+  hoverFadeIn: 0.12
+  hoverFadeOut: 0.18
+  clickDuration: 0.08
+--- !u!114 &-3207871423193310933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283954230108114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76afb7337c25c944e81295ededd3d941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseDown: {fileID: 8300000, guid: d860052cbbd9fb04bae082c34782a426, type: 3}
+  mouseUp: {fileID: 0}
+  mouseEnter: {fileID: 8300000, guid: 9e78e2acebf3edd4d88830bb1c847e4a, type: 3}
+  mouseExit: {fileID: 0}
+  mouseInsideLoop: {fileID: 0}

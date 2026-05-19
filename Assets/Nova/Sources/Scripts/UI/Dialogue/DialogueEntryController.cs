@@ -20,6 +20,7 @@ namespace Nova
     {
         private Text nameBox;
         private TMP_Text contentBox;
+        public TMP_Text ContentTMP => contentBox;
         public TextProxy contentProxy { get; private set; }
 
         public DialogueDisplayData displayData { get; private set; }

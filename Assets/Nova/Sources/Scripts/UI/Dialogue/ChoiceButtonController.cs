@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace Nova
         private float idleTime;
 
         public void Init(Dictionary<SystemLanguage, string> displayTexts, ChoiceImageInformation imageInfo,
-            string imageFolder, UnityAction onClick, bool interactable)
+            string imageFolder, UnityAction onClick, bool interactable, bool wasChosen = false)
         {
             this.displayTexts = displayTexts.ToDictionary(x => x.Key, x => DialogueEntry.InterpolateText(x.Value));
             this.imageInfo = imageInfo;
@@ -39,13 +40,33 @@ namespace Nova
                 transform.localScale = new Vector3(imageInfo.scale, imageInfo.scale, 1f);
             }
 
+            // "已选过"视觉：把 Button.SpriteState.selectedSprite 当作"已选"基础贴图。
+            // 保留 SpriteSwap transition：hover 仍换 highlightedSprite，鼠标移开会自动回到 image.sprite（即"已选"贴图）。
+            if (wasChosen && imageInfo == null)
+            {
+                var chosenSprite = button.spriteState.selectedSprite;
+                if (chosenSprite != null)
+                {
+                    image.sprite = chosenSprite;
+                }
+            }
+
             UpdateText();
 
+            var fx = GetComponent<ChoiceButtonFX>();
             button.onClick.AddListener(() =>
             {
                 if (CursorManager.UsingKeyboard || allowClick)
                 {
-                    onClick?.Invoke();
+                    if (fx != null)
+                    {
+                        fx.PlayClick();
+                        StartCoroutine(InvokeAfterFX(onClick, 0.08f));
+                    }
+                    else
+                    {
+                        onClick?.Invoke();
+                    }
                 }
 
                 idleTime = 0f;
@@ -102,6 +123,12 @@ namespace Nova
                     allowClick = true;
                 }
             }
+        }
+
+        private static IEnumerator InvokeAfterFX(UnityAction onClick, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            onClick?.Invoke();
         }
     }
 }

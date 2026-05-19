@@ -12,6 +12,11 @@ namespace Nova
         public IEnumerable<DialogueEntryController> dialogueEntryControllers => _dialogueEntryControllers;
         public int Count => _dialogueEntryControllers.Count;
 
+        public DialogueEntryController LastEntry =>
+            _dialogueEntryControllers.Count > 0
+                ? _dialogueEntryControllers[_dialogueEntryControllers.Count - 1]
+                : null;
+
         private PrefabFactory _prefabFactory;
 
         private PrefabFactory prefabFactory

@@ -89,6 +89,7 @@ namespace Nova
         private CanvasGroup backgroundCanvasGroup;
         private Button hideDialogueButton;
         private GameObject dialogueFinishIcon;
+        private DialogueFinishIcon dialogueFinishIconScript;
 
         private Color _backgroundColor;
         private float _configOpacity;
@@ -157,6 +158,7 @@ namespace Nova
             backgroundCanvasGroup = background.GetComponent<CanvasGroup>();
             hideDialogueButton = background.transform.Find("CloseButton").GetComponent<Button>();
             dialogueFinishIcon = background.transform.Find("DialogueFinishIcon").gameObject;
+            dialogueFinishIconScript = dialogueFinishIcon.GetComponent<DialogueFinishIcon>();
 
             textAnimation = controller.TextAnimation;
 
@@ -188,7 +190,58 @@ namespace Nova
 
         public void ShowDialogueFinishIcon(bool to)
         {
-            dialogueFinishIcon.SetActive(to);
+            if (!to)
+            {
+                dialogueFinishIcon.SetActive(false);
+                return;
+            }
+
+            // 已经在显示中 -> no-op，避免 GameViewController.Update 每帧重启 tween
+            if (dialogueFinishIcon.activeSelf) return;
+
+            // Append 模式：图标跟到最新一条 entry 的末字尾部
+            if (dialogueUpdateMode == DialogueUpdateMode.Append
+                && dialogueText != null
+                && dialogueFinishIconScript != null)
+            {
+                var lastEntry = dialogueText.LastEntry;
+                var tmp = lastEntry != null ? lastEntry.ContentTMP : null;
+                if (tmp != null)
+                {
+                    tmp.ForceMeshUpdate(ignoreActiveState: true);
+                    var info = tmp.textInfo;
+                    int idx = -1;
+                    for (int i = info.characterCount - 1; i >= 0; i--)
+                    {
+                        if (info.characterInfo[i].isVisible)
+                        {
+                            idx = i;
+                            break;
+                        }
+                    }
+
+                    if (idx >= 0)
+                    {
+                        var ci = info.characterInfo[idx];
+                        // 末字右下角 → world → entry root local
+                        Vector3 worldPos = tmp.transform.TransformPoint(ci.bottomRight);
+                        Vector3 localPos = lastEntry.transform.InverseTransformPoint(worldPos);
+                        var off = dialogueFinishIconScript.tailOffset;
+                        dialogueFinishIconScript.SetParentAndLocalPosition(
+                            lastEntry.transform,
+                            new Vector3(localPos.x + off.x, localPos.y + off.y, 0f));
+                        dialogueFinishIcon.SetActive(true);
+                        return;
+                    }
+                }
+            }
+
+            // Overwrite 模式 / fallback：图标回到 prefab 原始位置
+            if (dialogueFinishIconScript != null)
+            {
+                dialogueFinishIconScript.RestoreToOriginal();
+            }
+            dialogueFinishIcon.SetActive(true);
         }
 
         private void OnDialogueWillChange()
