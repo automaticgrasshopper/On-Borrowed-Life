@@ -1,0 +1,24 @@
+@<| label('ch0_12_B_1', '走，还是回去') |>
+<|
+set_box()
+box_alignment('center')
+play(bgm, 'BGM_AndreChenNervous')
+|>
+——师傅，等一下。
+
+我手指卡在车门把手上，没握紧，也没松开。
+
+——胸口的木牌还烫着。
+
+司机从后视镜里看了我一眼。
+
+「走不走？」
+<|
+set_box('hide')
+anim:wait(1)
+immediate_step()
+|>
+@<| branch{
+    {dest='ch0_15_E', text='离开'},
+    {dest='ch0_13_E', text='不离开'},
+} |>

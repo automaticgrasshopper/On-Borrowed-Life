@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 592330440740724959}
   - component: {fileID: 592330440740724956}
   - component: {fileID: 592330440740724957}
+  - component: {fileID: 7711400000000000001}
   m_Layer: 5
   m_Name: TitleButton
   m_TagString: Untagged
@@ -254,3 +255,16 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5F00\u59CB\u6E38\u620F"
+--- !u!114 &7711400000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931879755326992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7a70f0594447c69cb9a3200f197592, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  hoverMaterial: {fileID: 2100000, guid: 83b82723c2135ee46ad7b22005bbfbd5, type: 2}

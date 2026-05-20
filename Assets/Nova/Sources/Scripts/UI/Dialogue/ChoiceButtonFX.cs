@@ -76,6 +76,15 @@ namespace Nova
         {
             if (matInstance == null) return;
             if (revealCo != null) StopCoroutine(revealCo);
+            // 重置到隐藏态：让重播（如 SideMenu 反复 Open）也能从 0 扫起，
+            // 并保证 delay 期间按钮不会先以"上次扫完"的全亮态闪一下。
+            matInstance.SetFloat(RevealID, 0f);
+            if (textComponent != null)
+            {
+                var c = textComponent.color;
+                c.a = 0f;
+                textComponent.color = c;
+            }
             revealCo = StartCoroutine(CoReveal(delay));
         }
 

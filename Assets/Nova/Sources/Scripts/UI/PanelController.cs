@@ -66,6 +66,40 @@ namespace Nova
                 return;
             }
 
+            // 若 panel 下挂了 PanelEnterFX 覆盖层：FX 在 progress=1 时画面已被全覆盖。
+            // 这里直接跳过原 transition.Exit（避免 CanvasGroup fade 出现的 "删一下" 闪烁），
+            // 直接 OnHideComplete + SetActive(false)。下一个 view 入场 FX 会从全覆盖状态接力，
+            // 整个切换被深色覆盖层完全挡住。
+            var fx = myPanel.GetComponentInChildren<PanelEnterFX>(false);
+            if (fx != null)
+            {
+                fx.PlayExit(() =>
+                {
+                    if (!active)
+                    {
+                        onFinish?.Invoke();
+                        return;
+                    }
+                    OnHideComplete();
+                    myPanel.SetActive(false);
+                    OnHideFinish();
+                    onFinish?.Invoke();
+                });
+            }
+            else
+            {
+                HideAfterFX(doTransition, onFinish);
+            }
+        }
+
+        private void HideAfterFX(bool doTransition, Action onFinish)
+        {
+            if (!active)
+            {
+                onFinish?.Invoke();
+                return;
+            }
+
             Action onFinishAll = () =>
             {
                 OnHideFinish();

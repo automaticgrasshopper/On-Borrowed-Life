@@ -1,0 +1,26 @@
+@<| label('ch0_13_E_1', '电梯还是后门') |>
+<|
+set_box()
+box_alignment('center')
+play(bgm, 'BGM_AndreChenNervous')
+|>
+——还有几步路就到电梯。
+
+身后卷帘门后面那两个声音，停了。
+
+——夏连彬知道我在这。
+
+我可以转身从消防通道后门出去，跑。
+
+也可以走进这部电梯。
+
+——它在等我。
+<|
+set_box('hide')
+anim:wait(1)
+immediate_step()
+|>
+@<| branch{
+    {dest='ch0_15_E', text='离开'},
+    {dest='ch0_15_D', text='不离开'},
+} |>

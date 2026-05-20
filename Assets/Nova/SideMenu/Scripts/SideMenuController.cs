@@ -44,6 +44,12 @@ namespace Nova
         [SerializeField] private AudioClip slideCloseSound;
         [SerializeField] private AudioClip buttonClickSound;
 
+        [Header("Reveal FX (跟对话选项按钮同款的扫描入场)")]
+        [Tooltip("ChoiceButtonFX.mat（Assets/Nova/UI/Materials/）。每次 Open 时 4 个按钮错峰从左扫亮。留空 = 不启用。")]
+        [SerializeField] private Material revealMaterial;
+        [Tooltip("按钮之间的错峰延迟（秒）。跟 ChoicesController 同款节奏 = 0.04。0 = 全部同时。")]
+        [SerializeField] private float revealStagger = 0.04f;
+
         private const float CLICK_COOLDOWN = 0.8f;
 
         private ViewManager viewManager;
@@ -57,6 +63,7 @@ namespace Nova
         private VideoController videoController;
         private PrefabLoader prefabLoader;
         private NewBadge galleryBadgeInstance;
+        private ChoiceButtonFX[] revealFxList;
 
         /// <summary>
         /// 是否处于阻塞态：视频在播 或 prefabLoader 上挂着小游戏 prefab。
@@ -98,6 +105,26 @@ namespace Nova
                 var rt = galleryBadgeInstance.GetComponent<RectTransform>();
                 if (rt != null) rt.anchoredPosition = badgeAnchoredPosition;
                 galleryBadgeInstance.SetVisible(false);
+            }
+
+            // 给 4 个按钮挂 ChoiceButtonFX，让 SideMenu 每次 Open 都触发扫描入场。
+            // 注意：ChoiceButtonFX.Awake 会强制 _RevealProgress=0（按钮初始隐形），
+            // 但此刻 root 处于 closedPosition、整个菜单在屏幕外，玩家看不到。
+            if (revealMaterial != null)
+            {
+                var btns = new[] { btnFlowchart, btnLog, btnGallery, btnConfig };
+                revealFxList = new ChoiceButtonFX[btns.Length];
+                for (int i = 0; i < btns.Length; i++)
+                {
+                    if (btns[i] == null) continue;
+                    var img = btns[i].GetComponent<Image>();
+                    if (img == null) continue;
+                    // ChoiceButtonFX 校验 shader.name == "UI/ChoiceButtonFX"，所以必须先 swap material
+                    img.material = revealMaterial;
+                    var fx = btns[i].GetComponent<ChoiceButtonFX>();
+                    if (fx == null) fx = btns[i].gameObject.AddComponent<ChoiceButtonFX>();
+                    revealFxList[i] = fx;
+                }
             }
         }
 
@@ -193,6 +220,15 @@ namespace Nova
             slideTween?.Kill();
             slideTween = root.DOAnchorPos(openPosition, duration).SetEase(ease).SetUpdate(true);
             PlaySound(slideOpenSound);
+
+            // 按钮错峰扫描入场，跟 slide-out 同时进行（按钮一边随 root 滑入，一边从左扫亮）
+            if (revealFxList != null)
+            {
+                for (int i = 0; i < revealFxList.Length; i++)
+                {
+                    if (revealFxList[i] != null) revealFxList[i].PlayReveal(i * revealStagger);
+                }
+            }
         }
 
         private void Close()
