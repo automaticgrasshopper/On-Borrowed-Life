@@ -53,4 +53,7 @@ play(bgm, 'BGM_AndreChenNervous')
 ——但我也没退后。
 
 "走吧。"他笑着说，"我顺道。"
-@<| jump_to 'ch0_11_A_1' |>
+
+<| stop(bgm) |>
+——序章·完——
+@<| is_end() |>

@@ -8,8 +8,13 @@ namespace Nova
     public class ChoicesController : MonoBehaviour
     {
         [SerializeField] private ChoiceButtonController choiceButtonPrefab;
+        // 常规选项也走 VideoButton 容器（统一横向 GridLayoutGroup 视觉）：
+        // 非视频路径下，懒实例化此 prefab 到 transform 下，按钮挂到其 ButtonCanvas 子节点。
+        [SerializeField] private GameObject defaultContainerPrefab;
         [SerializeField] private GameObject backPanel;
         [SerializeField] private string imageFolder;
+
+        private const string ContainerChildName = "ButtonCanvas";
 
         private GameState gameState;
 
@@ -23,8 +28,19 @@ namespace Nova
         // 限时选项用：branch{} 里某个 index 仅作为超时跳转目标，不生成按钮（玩家看不到这一项）。
         private int hiddenChoiceIndex = -1;
 
-        private Transform ChoiceContainer =>
-            choiceContainerOverride != null ? choiceContainerOverride : transform;
+        // 非视频路径下懒实例化的 VideoButton 容器（每次出选项创建，选完销毁）。
+        private GameObject defaultContainerInstance;
+
+        private Transform EnsureDefaultContainer()
+        {
+            if (defaultContainerPrefab == null) return transform;
+            if (defaultContainerInstance == null)
+            {
+                defaultContainerInstance = Instantiate(defaultContainerPrefab, transform);
+            }
+            var child = defaultContainerInstance.transform.Find(ContainerChildName);
+            return child != null ? child : defaultContainerInstance.transform;
+        }
 
         public void SetChoiceContainerOverride(Transform container, Action onConsumed = null, int hiddenIndex = -1)
         {
@@ -99,7 +115,7 @@ namespace Nova
             }
 
             var useOverride = choiceContainerOverride != null;
-            var parent = ChoiceContainer;
+            var parent = useOverride ? choiceContainerOverride : EnsureDefaultContainer();
 
             // 视频模式下不显示原本的黑色半透明 backPanel —— 视频本身就是背景。
             if (backPanel != null && !useOverride)
@@ -146,10 +162,20 @@ namespace Nova
         private void RemoveAllChoices()
         {
             var useOverride = choiceContainerOverride != null;
-            var parent = ChoiceContainer;
-            foreach (Transform child in parent)
+
+            if (useOverride)
             {
-                Destroy(child.gameObject);
+                // 视频路径：清掉 override 容器下的按钮，容器本体由 VideoController 负责销毁。
+                foreach (Transform child in choiceContainerOverride)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+            else if (defaultContainerInstance != null)
+            {
+                // 非视频路径：直接销毁懒实例化的 VideoButton 容器（按钮跟着一起没）。
+                Destroy(defaultContainerInstance);
+                defaultContainerInstance = null;
             }
 
             activeChoiceCount = 0;
